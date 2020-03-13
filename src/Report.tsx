@@ -1,9 +1,6 @@
 
 import React from 'react'; // we need this to make JSX compile
-
-export type TestData = {
-    projectName: string,
-}
+import { TestData} from './TestData';
 
 type ReportProps = {
     data: TestData,
