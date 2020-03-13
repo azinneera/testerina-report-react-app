@@ -1,10 +1,14 @@
 
 import React from 'react'; // we need this to make JSX compile
 
-type TestData = {
-    
+export type TestData = {
+    projectName: string,
 }
 
-export const Report = ( data: TestData ) => <aside>
-     <p>Test Report</p>
+type ReportProps = {
+    data: TestData,
+}
+
+export const Report = ( { data }: ReportProps) => <aside>
+     <p>Test Report {data.projectName}</p>
 </aside>
