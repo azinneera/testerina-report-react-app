@@ -29,16 +29,16 @@ export function ReportSummary ({ data }: ReportProps) {
       }
     return <div className="ui equal width grid summary details">
         <div className="column">
-            <div className="ui segment"><i className="vial icon"></i><br />Total<h1 className="title BLACK">{data.totalTests}</h1></div>
+            <div className="ui segment">Total<h1 className="BLACK">{data.totalTests}</h1></div>
         </div>
         <div className="column">
-            <div className="ui segment"><i className="check circle outline icon"></i><br/>Passed<h1 className="title PASSED">{data.passed}</h1></div>
+            <div className="ui segment">Passed<h1 className="PASSED">{data.passed}</h1></div>
         </div>
         <div className="column">
-            <div className="ui segment"><i className="times circle outline icon"></i><br/>Failed<h1 className="title FAILURE">{data.failed}</h1></div>
+            <div className="ui segment">Failed<h1 className="FAILURE">{data.failed}</h1></div>
         </div>
         <div className="column">
-            <div className="ui segment"><i className="exclamation triangle icon"></i><br/>Skipped<h1 className="title SKIPPED">{data.skipped}</h1></div>
+            <div className="ui segment">Skipped<h1 className="SKIPPED">{data.skipped}</h1></div>
         </div>
         {coverage}
     </div>;
@@ -57,9 +57,9 @@ export function StatusReport({ data }: ReportProps) {
                 <tr>
                     <th>Module Name</th>
                     <th>Total Functions</th>
-                    <th><i className="check circle outline icon"></i></th>
-                    <th><i className="times circle outline icon"></i></th>
-                    <th><i className="exclamation triangle icon"></i></th>
+                    <th>Passed</th>
+                    <th>Failed</th>
+                    <th>Skipped</th>
                     {coverageHeaders}
                 </tr>
 

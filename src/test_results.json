@@ -1,0 +1,1 @@
+{"projectName":"ServiceTestProject","totalTests":1,"passed":1,"failed":0,"skipped":0,"coveredLines":0,"missedLines":0,"coveragePercentage":0.0,"moduleStatus":[{"name":"myService","totalTests":1,"passed":1,"failed":0,"skipped":0,"tests":[{"name":"testServiceFunction","status":"PASSED"}]}],"moduleCoverage":[]}
