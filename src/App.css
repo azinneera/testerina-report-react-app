@@ -1,7 +1,32 @@
-header {
+header.ui.grid {
     margin-top: 2em;
     margin-bottom: 4em;
     color: #4cc7c2;
+}
+body {
+    padding : 0% 10%;
+}
+
+
+.ui.progress{
+    background: #F74B5A 0% 0% no-repeat padding-box;
+}
+.ui.progress, .ui.progress:first-child, .ui.progress:last-child {
+    margin-bottom: 0;
+}
+.ui.progress .bar  {
+    background: #33B4AF 0% 0% no-repeat padding-box;
+    height: 1.3em;
+}
+
+.ui.grid>* {
+    padding: 0;
+}
+.ui.grid.details {
+    width: 100%;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    margin-top: 8em;
 }
 
 .App-logo{
@@ -10,4 +35,47 @@ header {
 
 .ui.segment {
     box-shadow: none;
+}
+
+.PASSED {
+    color: #33B4AF;
+}
+.FAILURE {
+    color: #F74B5A;
+}
+.SKIPPED {
+    color: #FEAC39;
+}
+.BLACK {
+    color: #000000;
+}
+.ui.table {
+    font-weight: bold;
+    text-align: center;
+}
+
+.check.circle {
+    color: #24A2B7;
+}
+.times.circle {
+    color: #F74B5A;
+}
+.exclamation.triangle {
+    color: #FEAC39;
+}
+.vial {
+    color: #000000;
+}
+
+h1.title {
+    margin-top: -0.7em;
+    float: right;
+}
+.summary .ui.segment {
+    font-size: 0.8em;
+    color: #9FA2AF;
+    border-radius: 10px;
+}
+.summary i {
+    font-size: 1.5em;
 }
