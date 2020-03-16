@@ -1,0 +1,13 @@
+header {
+    margin-top: 2em;
+    margin-bottom: 4em;
+    color: #4cc7c2;
+}
+
+.App-logo{
+    width: 5em;
+}
+
+.ui.segment {
+    box-shadow: none;
+}
