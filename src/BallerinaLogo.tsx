@@ -4,7 +4,7 @@ export function BallerinaLogo() {
 	return (
 <svg version="1.1" id="Layer_1" x="0px" y="0px"
 	 width="132px" height="24px" viewBox="147.39 88.001 660.444 121.649"
-	 enable-background="new 147.39 88.001 660.444 121.649"
+	 enableBackground="new 147.39 88.001 660.444 121.649"
 	 >
 <g>
 	<g>

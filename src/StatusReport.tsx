@@ -1,84 +1,91 @@
-import React, { useState } from 'react'; // we need this to make JSX compile
-import { TestData, ModuleStatus, ModuleCoverage} from './TestData';
-
+import React, { Component } from 'react'; // we need this to make JSX compile
+import { TestData} from './TestData';
+import {ReactComponent as TotalIcon} from './images/test.svg';
+import {ReactComponent as PassedIcon} from "./images/success.svg";
+import {ReactComponent as FailedIcon} from "./images/failed.svg";
+import {ReactComponent as SkippedIcon} from "./images/skipped.svg";
 
 type ReportProps = {
     data: TestData,
-}
-
-type ModuleStatusProps = {
-    data: ModuleStatus
-}
-
-type ModuleCoverageProps = {
-    data: ModuleCoverage
 }
 
 export function ReportSummary ({ data }: ReportProps) {
     let isCoverageAvailable = data.moduleCoverage.length > 0
     let coverage = null
     if (isCoverageAvailable) {
-        coverage = <div className="five wide column">
-            <h4>Code Coverage: {data.coveragePercentage}%</h4>
-            <div className="ui progress" data-percent={data.coveragePercentage}>
-                <div className="bar" style={{width: data.coveragePercentage+"%"}}>
-                <div className="progress">{data.coveragePercentage}%</div>
-                </div>
+        coverage = <div className="col-sm-3 card summary-card progress-card">
+            <h6>Code Coverage: {data.coveragePercentage}%</h6>
+            <div className="progress">
+                <div className="progress-bar" style={{width: data.coveragePercentage+"%"}}>{data.coveragePercentage}70%</div>
             </div>
         </div>
       }
-    return <div className="ui equal width grid summary details">
-        <div className="column">
-            <div className="ui segment">Total<h1 className="BLACK">{data.totalTests}</h1></div>
+    return <div className="row">
+        <div className="col card summary-card total">
+            <div className="row">
+                <div className="col-sm-4"><TotalIcon className="icon total" /></div>
+                <div className="col-sm-8"><h3>{data.totalTests}</h3><small>Total tests</small></div>
+            </div>
         </div>
-        <div className="column">
-            <div className="ui segment">Passed<h1 className="PASSED">{data.passed}</h1></div>
+        <div className="col card summary-card passed white-font">
+        <div className="row">
+                <div className="col-sm-5"><PassedIcon className="icon" /><br/><small>Passed</small></div>
+                <div className="col-sm-7"><h1>{data.passed}/<small>{data.totalTests}</small></h1></div>
+            </div>
         </div>
-        <div className="column">
-            <div className="ui segment">Failed<h1 className="FAILURE">{data.failed}</h1></div>
+        <div className="col card summary-card failed white-font">
+        <div className="row">
+                <div className="col-sm-5"><FailedIcon className="icon" /><br/><small>Failed</small></div>
+                <div className="col-sm-7"><h1>{data.failed}/<small>{data.totalTests}</small></h1></div>
+            </div>
         </div>
-        <div className="column">
-            <div className="ui segment">Skipped<h1 className="SKIPPED">{data.skipped}</h1></div>
+        <div className="col card summary-card skipped white-font">
+        <div className="row">
+                <div className="col-sm-5"><SkippedIcon className="icon" /><br/><small>Skipped</small></div>
+                <div className="col-sm-7"><h1>{data.skipped}/<small>{data.totalTests}</small></h1></div>
+            </div>
         </div>
         {coverage}
     </div>;
      
 }
 
-export function StatusReport({ data }: ReportProps) {
-    const [page, setPage] = useState({ page: "index", module: "" });
-    let isCoverageAvailable = data.moduleCoverage.length > 0
-    let coverageHeaders = null
-    if (isCoverageAvailable) {
-        coverageHeaders = [<th>Lines Covered</th>,<th>Lines Missed</th>,<th>Coverage Percentage</th>]
-    }
-    return <div className="ui equal width grid details">
-            <table className="ui celled padded striped table">
+class ProjectReport extends Component<{data: TestData, updateState: Function}> { 
+  render() {
+      let data = this.props.data
+      let isCoverageAvailable = data.moduleCoverage.length > 0
+        let coverageHeaders = null
+        if (isCoverageAvailable) {
+            coverageHeaders = [<th>Lines Covered</th>,<th>Lines Missed</th>,<th>Coverage Percentage</th>]
+        }
+      return(
+        <div className="row card">
+            <table className="col-sm-12 table table-borderless">
+                <thead>
                 <tr>
                     <th>Module Name</th>
                     <th>Total Functions</th>
-                    <th>Passed</th>
-                    <th>Failed</th>
-                    <th>Skipped</th>
+                    <th><PassedIcon className="icon failed-icon" /></th>
+                    <th><FailedIcon className="icon passed-icon" /></th>
+                    <th><SkippedIcon className="icon skipped-icon" /></th>
                     {coverageHeaders}
                 </tr>
-
-                {data.moduleStatus.map(function(module, index){
+                </thead>
+                <tbody>
+                {data.moduleStatus.map((module, index) => {
                         let coverageData = null
                         if (isCoverageAvailable) {
                             const moduleCov = data.moduleCoverage[index]
                             coverageData = [<td>{moduleCov.coveredLines}</td>,
                             <td>{moduleCov.missedLines}</td>,
                             <td>
-                                <div className="ui progress" data-percent={moduleCov.coveragePercentage}>
-                                    <div className="bar" style={{width: moduleCov.coveragePercentage+"%"}}>
-                                    <div className="progress">{moduleCov.coveragePercentage}%</div>
-                                    </div>
+                                <div className="progress">
+                                    <div className="progress-bar" style={{width: moduleCov.coveragePercentage+"%"}}>{moduleCov.coveragePercentage}70%</div>
                                 </div>
                             </td>]
                         }
                         return <tr id={module.name}>
-                        <td><a href={"#"+module.name}>{module.name}</a></td>
+                        <td><a onClick={() => this.props.updateState("module", index)}>{module.name}</a></td>
                         <td>{module.totalTests}</td>
                         <td>{module.passed}</td>
                         <td>{module.failed}</td>
@@ -86,60 +93,11 @@ export function StatusReport({ data }: ReportProps) {
                         {coverageData}
                         </tr>;
                     })}
+                </tbody>
             </table>
-        
-    </div>;
+    </div>
+      );
+  }
 }
 
-export function ModuleStatusSummary ({ data }: ModuleStatusProps) {
-    return <div className="seven wide column">
-        <h3>Test Status</h3>
-        <table className="ui celled padded striped table">
-            <tr>
-                    <th>Test Name</th>
-                    <th>Status</th>
-                </tr>
-                {data.tests.map(function(test, index) {
-                let failure_reason = null
-                if (test.status == "FAILURE") {
-                    failure_reason =<tr className={test.status}><td colSpan={2}>{test.failureMessage}</td></tr>
-                    
-                }
-                return [<tr className={test.status} id={test.name}>
-                    <td>{test.name}</td>
-                    <td>{test.status}</td>
-                </tr>,failure_reason]
-                
-                
-            })}
-        </table>
-    </div>;
-}
-
-export function ModuleCoverageSummary ({ data }: ModuleCoverageProps) {
-    return <div className="nine wide column">
-        <h3>Test Coverage</h3>
-        <table className="ui celled padded striped table">
-            <tr>
-                <th>Source File</th>
-                <th>Lines Covered</th>
-                <th>Lines Missed</th>
-                <th>Coverage Percentage</th>
-            </tr>
-            {data.sourceFiles.map(function(sourceFile, index) {
-                return <tr id={sourceFile.name}>
-                    <td>{sourceFile.name}</td>
-                    <td>{sourceFile.coveredLines.length}</td>
-                    <td>{sourceFile.missedLines.length}</td>
-                    <td>
-                        <div className="ui progress" data-percent={data.coveragePercentage}>
-                            <div className="bar" style={{width: data.coveragePercentage+"%"}}>
-                                <div className="progress">{data.coveragePercentage}%</div>
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-            })}
-        </table>
-    </div>;
-}
+export default ProjectReport;
